@@ -1,1 +1,1 @@
-[[setting-virtual-mail]]
+[[ubuntu/setting-virtual-mail]]
