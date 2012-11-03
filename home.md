@@ -1,1 +1,1 @@
-곧 좋은 페이지가 될 예정입니다.
+[[ubuntu/setting-virtual-mail]]
