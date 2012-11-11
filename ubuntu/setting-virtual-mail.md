@@ -1,15 +1,15 @@
-https://help.ubuntu.com/community/PostfixCompleteVirtualMailSystemHowto
+# [Setting Virtual Mail](https://help.ubuntu.com/community/PostfixCompleteVirtualMailSystemHowto)
 
-Setting Virtual Mail
+[[_TOC_]]
 
-# Postfix 설치
+## Postfix 설치
 ```
 $ sudo apt-get install postfix
 ```
 
 Postfix Configuration 에서 "Internet Site" 선택
 
-# MySQL map support for Postfix
+## MySQL map support for Postfix
 
 ```
 $ sudo apt-get install postfix-mysql
@@ -26,7 +26,7 @@ $ sudo apt-get install courier-imap
 $ sudo apt-get install courier-imap-ssl
 ```
 
-# SMTP 인증
+## SMTP 인증
 
 ```
 $ sudo apt-get install postfix-tls
@@ -36,7 +36,7 @@ $ sudo apt-get install libsasl2-modules-sql
 $ sudo apt-get install openssl
 ```
 
-# MySQL Setting
+## MySQL Setting
 
 ```
 $ sudo mysqladmin -u root password rootpassword
@@ -183,7 +183,7 @@ CREATE TABLE vacation (
 $ mysql -u root -p < postfixadmin-mysql.sql
 ```
 
-# Setting Postfix Map
+## Setting Postfix Map
 
 /etc/postfix/mysql_virtual_alias_maps.cf
 
@@ -254,21 +254,21 @@ $ sudo chgrp postfix /etc/postfix/mysql_*.cf
 $ sudo chmod 640 /etc/postfix/mysql_*.cf
 ```
 
-# Create vmail user
+## Create vmail user
 
 ```
 $ sudo groupadd -g 5000 vmail
 $ sudo useradd -m -g vmail -u 5000 -d /home/vmail -s /bin/bash vmail
 ```
 
-# Configuring Postfix with MySQL maps
+## Configuring Postfix with MySQL maps
 
 ```
 $ sudo editor /etc/postfix/main.cf
 ```
 
 ```
-# Virtual Mailbox Domain Settings
+## Virtual Mailbox Domain Settings
 
 virtual_alias_maps = mysql:/etc/postfix/mysql_virtual_alias_maps.cf
 virtual_mailbox_domains = mysql:/etc/postfix/mysql_virtual_domains_maps.cf
@@ -280,7 +280,7 @@ virtual_gid_maps = static:5000
 virtual_mailbox_base = /home/vmail
 virtual_transport = virtual
 
-# Additional for quota support
+## Additional for quota support
 
 virtual_create_maildirsize = yes
 virtual_mailbox_extended = yes
@@ -300,7 +300,7 @@ download postfixadmin's debian package: http://postfixadmin.sourceforge.net/
 $ dpkg -i postfixadmin_*_all.deb  
 ```
 
-# Courier-IMAP and Authentication Services
+## Courier-IMAP and Authentication Services
 
 /etc/courier/authdaemonrc
 
@@ -335,7 +335,7 @@ $ tail -f /var/log/mail*
 
 If you are still having issues, try these troubleshooting tips: http://www.courier-mta.org/authlib/README.authdebug.html
 
-# SMTP Authentication
+## SMTP Authentication
 
 /etc/postfix/main.cf add
 
