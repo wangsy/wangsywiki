@@ -3,7 +3,7 @@
 [[_TOC_]]
 
 ## Postfix 설치
-```
+```sh
 $ sudo apt-get install postfix
 ```
 
@@ -11,13 +11,13 @@ Postfix Configuration 에서 "Internet Site" 선택
 
 ## MySQL map support for Postfix
 
-```
+```sh
 $ sudo apt-get install postfix-mysql
 $ sudo apt-get install mysql-client
 $ sudo apt-get install mysql-server
 ```
 
-```
+```v
 $ sudo apt-get install courier-authdaemon
 $ sudo apt-get install courier-authlib-mysql
 $ sudo apt-get install courier-pop
@@ -28,7 +28,7 @@ $ sudo apt-get install courier-imap-ssl
 
 ## SMTP 인증
 
-```
+```sh
 $ sudo apt-get install postfix-tls
 $ sudo apt-get install libsasl2-2
 $ sudo apt-get install libsasl2-modules
@@ -38,13 +38,13 @@ $ sudo apt-get install openssl
 
 ## MySQL Setting
 
-```
+```sh
 $ sudo mysqladmin -u root password rootpassword
 ```
 
 postfixadmin-sql.sql
 
-```
+```sql
 #------------------------------------Start copy-------------------------------------
 #
 # Postfix Admin
@@ -179,7 +179,7 @@ CREATE TABLE vacation (
 #------------------------------------End copy-------------------------------------
 ```
 
-```
+```sh
 $ mysql -u root -p < postfixadmin-mysql.sql
 ```
 
@@ -249,21 +249,21 @@ where_field = domain
 additional_conditions = and backupmx = '1'
 ```
 
-```
+```sh
 $ sudo chgrp postfix /etc/postfix/mysql_*.cf
 $ sudo chmod 640 /etc/postfix/mysql_*.cf
 ```
 
 ## Create vmail user
 
-```
+```sh
 $ sudo groupadd -g 5000 vmail
 $ sudo useradd -m -g vmail -u 5000 -d /home/vmail -s /bin/bash vmail
 ```
 
 ## Configuring Postfix with MySQL maps
 
-```
+```sh
 $ sudo editor /etc/postfix/main.cf
 ```
 
@@ -290,13 +290,13 @@ virtual_maildir_limit_message = Sorry, the your maildir has overdrawn your disks
 virtual_overquota_bounce = yes
 ```
 
-```
+```sh
 $ usermod -G sasl postfix
 ```
 
 download postfixadmin's debian package: http://postfixadmin.sourceforge.net/
 
-```
+```sh
 $ dpkg -i postfixadmin_*_all.deb  
 ```
 
@@ -328,7 +328,7 @@ MYSQL_UID_FIELD '5000'
 MYSQL_GID_FIELD '5000'
 ```
 
-```
+```sh
 $ /etc/init.d/courier-authdaemon restart ; /etc/init.d/courier-imap restart; /etc/init.d/courier-pop restart
 $ tail -f /var/log/mail*
 ```
