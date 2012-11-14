@@ -2,6 +2,7 @@
 
 ```sh
 $ sudo apt-get install php5-cgi
+$ sudo apt-get install nginx
 ```
 
 edit `/etc/init.d/php-fcgi`
@@ -48,4 +49,31 @@ case "$1" in
   ;;
 esac
 exit $RETVAL
+```
+
+```sh
+$ sudo chmod +x /etc/init.d/php-fcgi
+$ sudo /etc/init.d/php-fcgi start
+$ sudo update-rc.d php-fcgi defaults
+```
+
+## Test
+
+```
+location ~ \.php$ {
+    fastcgi_pass    127.0.0.1:9000;
+    fastcgi_index   index.php;
+    fastcgi_param   SCRIPT_FILENAME /var/www/nginx-default$fastcgi_script_name;
+    include         fastcgi_params;
+}
+```
+
+```sh
+$ sudo service nginx restart
+```
+
+```php
+<?php
+
+phpinfo();
 ```
