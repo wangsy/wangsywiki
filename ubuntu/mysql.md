@@ -11,3 +11,7 @@ $ sudo apt-get install mysql-server
 ```sh
 $ sudo apt-get install mysql-client
 ```
+
+### PHP Extension
+
+* [[PHP 설치 참조|ubuntu/php]]
