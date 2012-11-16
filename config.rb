@@ -1,0 +1,1 @@
+Gollum::Sanitization:ELEMENTS << 'script';
