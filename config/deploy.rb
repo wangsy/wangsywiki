@@ -6,10 +6,7 @@ set :ssh_options, { :forward_agent => true }
 
 namespace :wiki do
 	task :sync do
-		run "cd /home/wangsy/www/wangsywiki/; git pull"
-		run "cd /home/wangsy/www/wangsywiki/; git push"
-	end
-	task :rupdate do
-		run "cd /home/wangsy/www/wangsywiki/; git push"
+		run "cd /home/wangsy/www/wangsywiki/; git pull 2>&1"
+		run "cd /home/wangsy/www/wangsywiki/; git push 2>&1"
 	end
 end
