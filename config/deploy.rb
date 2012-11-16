@@ -8,4 +8,7 @@ namespace :wiki do
 	task :update do
 		run "cd /home/wangsy/www/wangsywiki/; git pull"
 	end
+	task :rupdate do
+		run "cd /home/wangsy/www/wangsywiki/; git push"
+	end
 end
