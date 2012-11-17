@@ -5,9 +5,8 @@ role :web, "woz"                          # Your HTTP server, Apache/etc
 set :ssh_options, { :forward_agent => true }
 
 namespace :wiki do
-	task :rsync do
-		run "cd /home/wangsy/www/wangsywiki/"
-		#run "cd /home/wangsy/www/wangsywiki/; git pull"
-		#run "cd /home/wangsy/www/wangsywiki/; git push"
+	task :sync do
+		run "cd /home/wangsy/www/wangsywiki/; git pull 2>&1"
+		run "cd /home/wangsy/www/wangsywiki/; git push 2>&1"
 	end
 end
