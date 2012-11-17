@@ -17,7 +17,7 @@ $ sudo apt-get install mysql-client
 $ sudo apt-get install mysql-server
 ```
 
-```v
+```sh
 $ sudo apt-get install courier-authdaemon
 $ sudo apt-get install courier-authlib-mysql
 $ sudo apt-get install courier-pop
