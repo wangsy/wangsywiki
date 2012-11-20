@@ -32,3 +32,5 @@ $ sudo service transmission-daemon stop # 종료
 "rpc-whitelist": "127.0.0.1,192.168.0.*",
 "rpc-whitelist-enabled": true,
 ```
+
+그리고, 웹브라우저에서 해당 주소로 연결해서 사용가능!
