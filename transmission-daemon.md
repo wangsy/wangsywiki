@@ -13,9 +13,9 @@ $ sudo service transmission-daemon start # 시작
 $ sudo service transmission-daemon stop # 종료
 ```
 
-# 셋업
+# [셋업](https://trac.transmissionbt.com/wiki/EditConfigFiles)
 
-`/etc/init.d/transmission-daemon` 파일을 수정하면 된다. 수정에 관해서는 [https://trac.transmissionbt.com/wiki/EditConfigFiles](https://trac.transmissionbt.com/wiki/EditConfigFiles) 참조.
+`/etc/init.d/transmission-daemon` 파일을 수정하면 된다. 수정에 관해서는 [링크](https://trac.transmissionbt.com/wiki/EditConfigFiles) 참조.
 
 # 웹으로 접속
 
