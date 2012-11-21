@@ -1,2 +1,1 @@
-* [@wangsy](http://twitter.com/wangsy)
-* [facebook](http://facebook.com/wangsooyong)
+twitter: [@wangsy](http://twitter.com/wangsy) / facebook : [facebook](http://facebook.com/wangsooyong)
