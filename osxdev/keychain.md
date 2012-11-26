@@ -56,7 +56,7 @@
 </tr>
 <tr>
 <th><code>kSecServerItemAttr</code></th>
-<td>서버주소. "위치" 항목으로 표시. <code>('srvr')</code></td>
+<td>위치. (서버주소) <code>('srvr')</code></td>
 </tr>
 </table>
 
