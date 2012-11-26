@@ -52,10 +52,11 @@
 </tr>
 <tr>
 <th><code>kSecSecurityDomainItemAttr</code></th>
-<td>인터넷 비밀번호의 경우 "위치" 항목 <code>('sdmn')</code></td>
+<td>HTTP Basic Auth Protocol 의 Realm에 해당.<code>('sdmn')</code></td>
 </tr>
 <tr>
 <th><code>kSecServerItemAttr</code></th>
-<td>서버 <code>UInt32 ('srvr')</code></td>
+<td>서버주소. "위치" 항목으로 표시. <code>('srvr')</code></td>
 </tr>
 </table>
+
