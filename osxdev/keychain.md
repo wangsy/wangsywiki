@@ -290,5 +290,96 @@ OSStatus SecKeychainOpen (
 
 다 쓴 후에는 반드시 `CFRelease()` 해 준다.
 
-# 키체인 접근
+# 키체인 접근 권한 관리
 
+각 키체인 아이템에 대한 접근 권한 관리는 `SecAccessRef` 구조체를 통해서 관리된다.
+
+아이템의 접근 권한을 얻으려면,
+
+```c
+OSStatus SecKeychainItemCopyAccess (SecKeychainItemRef item, SecAccessRef *access);
+```
+
+접근 권한을 변경하고 싶으면
+
+```c
+OSStatus SecKeychainItemSetAccess (SecKeychainItemRef item, SecAccessRef access);
+```
+
+- 하나의 키체인 아이템은 하나의 `SecAccessRef` 구조체를 가진다
+- 하나의 `SecAccessRef` 구조체는 복수의 `SecACL` 구조체를 가진다.
+- 하나의 `SecACL` 구조체는 복수의 `SecTrustedApplication` 구조체를 가진다.
+
+접근권한 관련한 내용을 알아보기 위해, dumpem.m 소스를 아래와 같이 수정한다.
+
+```objc
+    while (SecKeychainSearchCopyNext (search, &item) != errSecItemNotFound) {        dumpItem (item, true);        // Get the SecAccess        SecAccessRef access;        SecKeychainItemCopyAccess (item, &access);        showAccess (access);        CFRelease (access);        CFRelease (item);		count++; 	}
+```
+
+그리고 아래 함수를 추가한다.
+
+```objc
+void showAccess (SecAccessRef accessRef) {    CFArrayRef aclList;    SecAccessCopyACLList(accessRef, &aclList);    int count = CFArrayGetCount(aclList);    printf ("%d lists\n", count);    for (int i = 0; i < count; i++) {        SecACLRef acl = (SecACLRef) CFArrayGetValueAtIndex(aclList, i);        CFArrayRef applicationList;        CFStringRef description;        CSSM_ACL_KEYCHAIN_PROMPT_SELECTOR promptSelector;        SecACLCopySimpleContents (acl, &applicationList, &description,
+                                  &promptSelector);        if (promptSelector.flags            & CSSM_ACL_KEYCHAIN_PROMPT_REQUIRE_PASSPHRASE) {            printf ("\t%d: ACL %s - Requires passphrase\n", i,                    [(NSString *)description UTF8String]);        } else {            printf ("\t%d: ACL %s - Does not require passphrase\n", i,                    [(NSString *)description UTF8String]);        CFRelease(description);        if (applicationList == NULL) {            printf ("\t\tNo application list %d\n", i);            continue;		}        int appCount = CFArrayGetCount(applicationList);        printf ("\t\t%d applications in list %d\n", appCount, i);        for (int j = 0; j < appCount; j++) {            SecTrustedApplicationRef application;            CFDataRef appData;            application = (SecTrustedApplicationRef)CFArrayGetValueAtIndex(applicationList, j);            SecTrustedApplicationCopyData(application, &appData);            printf ("\t\t\t%s\n", CFDataGetBytePtr(appData));            CFRelease(appData);		}        CFRelease(applicationList);    }} // showAccess
+```
+실행화면은 아래와 같다.
+```
+$ ./dumpem borkware ...Password = dsch-4acgs    0: 'acct' = "borkware"    1: 'desc' = "Web form password"    2: 'mdat' = "20100713173203Z"3 lists    0: ACL twitter.com (borkware) - Does not require passphrase        No application list 0    1: ACL twitter.com (borkware) - Does not require passphrase        3 applications in list 1            /Users/markd/Writing/core-osx/keychain-chap/Projects/dumpem            /Local/Apps/Google Chrome.app            /Applications/Safari.app    2: ACL twitter.com (borkware) - Does not require passphrase        0 applications in list 2...
+```
+## 여기서 잠깐
+Keychain 은 CSSM 과 CDSA 를 이용해서 만들어졌다.
+- CSSM : Common Security Services Manager (API to CDSA)
+- CDSA : Common Data Security Architecture
+
+# 새로운 키체인 아이템 만들기
+
+```c
+OSStatus SecKeychainItemCreateFromContent (
+	SecItemClass itemClass, 
+	SecKeychainAttributeList *attrList,	UInt32  passwdLength,	const void *password,	SecKeychainRef  keychainRef,	SecAccessRef  initialAccess,	SecKeychainItemRef *itemRef);
+```
+
+- `itemClass`에는 
+  - `kSecInternetPasswordItemClass`
+  - `kSecGenericPasswordItemClass`
+  - `kSecAppleSharePasswordItemClass`
+  - `kSecCertificateItemClass`
+- `keychainRef`에 NULL을 넣으면, 기본 키체인이 선택된다.
+- `itemRef`는 새롭게 만들어진 아이템의 참조가 얻어진다
+
+```objc
+// additem.m -- add a new item to the keychain// gcc -g -Wall -framework Security -o additem additem.m#import <Security/Security.h>#include <stdio.h> // for printf()int main (int argc, char *argv[]) {    SecKeychainAttribute attributes[2];    attributes[0].tag = kSecAccountItemAttr;    attributes[0].data = "fooz";    attributes[0].length = 4;    attributes[1].tag = kSecDescriptionItemAttr;    attributes[1].data = "I seem to be a verb";    attributes[1].length = 19;    SecKeychainAttributeList list;    list.count = 2;    list.attr = attributes;    SecKeychainItemRef item;    OSStatus status = SecKeychainItemCreateFromContent(kSecGenericPasswordItemClass, &list,         5, "budda", NULL, NULL, &item);    if (status != 0) {        printf ("Error creating new item: %d\n", (int)status);    }    return EXIT_SUCCESS;} // main
+```
+실행후 키체인접근 애플리케이션을 살펴보면, 들어가 있는 것을 확인할 수 있다.
+# 간편 함수
+```cOSStatus SecKeychainAddInternetPassword (	SecKeychainRef keychain, 	UInt32 serverNameLength,	const char  *serverName,	UInt32       securityDomainLength,	const char  *securityDomain,	UInt32       accountNameLength,	const char  *accountName,	UInt32       pathLength,	const char  *path,	UInt16       port,	SecProtocolType       protocol,	SecAuthenticationType authenticationType,	UInt32       passwordLength,	const void  *passwordData,	SecKeychainItemRef    *itemRef)
+```
+
+```cOSStatus SecKeychainAddGenericPassword (
+	SecKeychainRef keychain, UInt32 serviceNameLength,	const char  *serviceName,	UInt32       accountNameLength,	const char  *accountName,	UInt32       passwordLength,	const void  *passwordData,	SecKeychainItemRef *itemRef)
+``````cOSStatus SecKeychainFindInternetPassword (
+	CFTypeRef keychainOrArray, 
+	UInt32 serverNameLength,	const char  *serverName,	UInt32       securityDomainLength,	const char  *securityDomain,	UInt32       accountNameLength,	const char  *accountName,	UInt32       pathLength,	const char  *path,	UInt16       port,	SecProtocolType protocol,	SecAuthenticationType authenticationType,	UInt32      *passwordLength,	void       **passwordData,	SecKeychainItemRef *itemRef)
+```
+
+```cOSStatus SecKeychainFindGenericPassword (
+	CFTypeRef keychainOrArray, 
+	UInt32 serviceNameLength,	const char  *serviceName,	UInt32       accountNameLength,	const char  *accountName,	UInt32      *passwordLength,
+	void       **passwordData,	SecKeychainItemRef *itemRef)
+```
+
+`SecProtocolType`은 아래 항목중 선택
+
+- kSecProtocolTypeFTP- kSecProtocolTypeFTPAccount- kSecProtocolTypeHTTP- kSecProtocolTypeIRC- kSecProtocolTypeNNTP- kSecProtocolTypePOP3- kSecProtocolTypeSMTP- kSecProtocolTypeSOCKS- kSecProtocolTypeIMAP- kSecProtocolTypeLDAP- kSecProtocolTypeAppleTalk
+- kSecProtocolTypeAFP- kSecProtocolTypeTelnet
+- kSecProtocolTypeSSH
+
+`SecAuthenticationType`의 경우, `kSecAuthenticationTypeDefault`를 선택
+
+## 만일, 인증창이 떠서는 안될 경우.
+
+데몬이나, 백그라운드앱의 경우, 인증창이 떠서는 안된다. 그럴 경우
+
+```c
+SecKeychainSetUserInteractionAllowed (NO);
+```
