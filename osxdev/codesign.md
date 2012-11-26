@@ -24,5 +24,5 @@ Keychain 을 통해서 애플리케이션의 접근 권한을 얻으면(항상 �
 
 자체서명된 인증서는 방화벽에서는 쓰일 수 없고, 키체인접근 유틸리티에서는 사용 가능하다.
 
-[[./codesigning-1.png]]
+[[osxdev/codesigning-1.png]]
 
