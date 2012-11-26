@@ -76,4 +76,6 @@ $ codesign -s "CodeSigning" app-name.app
 
 번들을 코드사인하면, 번들내의 리소스, Info.plist 파일등 일부만 바뀌어도 invalid 한 상태가 된다.
 
+[[codesigning-3.png]]
+
 Xcode 에서, Build Settings 에서 `Code Signing Identity`를 세팅해 주면, 빌드할 때마다, 항상 코드사인을 해 준다.
