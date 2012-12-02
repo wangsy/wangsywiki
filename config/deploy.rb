@@ -1,7 +1,7 @@
 set :application, "wangsywiki"
 set :repository,  "git@g.mintech.kr:wangsywiki.git"
 
-role :web, "woz"                          # Your HTTP server, Apache/etc
+role :web, "tim"                          # Your HTTP server, Apache/etc
 set :ssh_options, { :forward_agent => true }
 
 #namespace :wiki do
