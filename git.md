@@ -172,3 +172,12 @@ $ git config --global alias.ci commit
 $ git config --global alias.co checkout
 ```
 
+# 참조 
+
+- [[gitflow|git-flow]]
+- [[gitosis]]
+
+# 못다한 이야기들
+
+- gerrit
+- jenkins
