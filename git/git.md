@@ -174,8 +174,8 @@ $ git config --global alias.co checkout
 
 # 참조 
 
-- [[git-flow|gitflow]]
-- [[gitosis]]
+- [[git-flow|git/gitflow]]
+- [[git/gitosis]]
 
 # 못다한 이야기들
 
