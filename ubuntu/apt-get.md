@@ -30,3 +30,11 @@ $ sudo apt-get update
 ```
 $sudo apt-get upgrade
 ```
+
+# Unable to locate package 
+
+update 를 안해줬을 가능성이 높다.
+
+```
+$ sudo apt-get update
+```
