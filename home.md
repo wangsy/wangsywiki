@@ -3,7 +3,8 @@ wangsy wiki
 
 개발 로그
 --------
-- [[dev-logs/201304]]
+- [2013. 04](dev-logs/201304)
 
-
-[[ubuntu/setting-virtual-mail]]
+Ubuntu Setting
+---------------
+- [Virtual Mail Setting](ubuntu/setting-virtual-mail)
