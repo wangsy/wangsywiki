@@ -60,4 +60,5 @@ end
 </pre>
 
 여기서 주의!
-만일 원하는 것이 변경 사항을 동시에 하는 것을 막으려 한다면, `ActiveRecord::PessimisticLock`을 쓰는 것이 바른 방법이다. 하지만 위 코드 처럼 검색하는 것까지 막으려 한다면, critical section 을 쓰는 방법 뿐일 듯 하다.
+
+만일 원하는 것이 변경 사항을 동시에 하는 것을 막으려 한다면, ` ActiveRecord::Locking::Pessimistic`을 쓰는 것이 바른 방법이다. 하지만 위 코드 처럼 검색하는 것까지 막으려 한다면, critical section 을 쓰는 방법 뿐일 듯 하다.
