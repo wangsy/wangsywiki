@@ -1,3 +1,5 @@
+# ActiveRecord 의 DB Cache 문제
+
 ActiveRecord 에서 복합적인 쿼리를 쓰다 보면, 캐시가 강제로 먹어서 애먹는 경우가 있다.
 
 예를 들어, 아래와 같은 쿼리에서
