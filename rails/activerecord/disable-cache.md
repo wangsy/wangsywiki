@@ -43,4 +43,4 @@ SELECT `table`.*
                 GROUP BY `table`.`product_type`)
 </pre>
 
-이것은 Array 변환 문제를 해결함과 동시에 위에서의 문제 였던, cache 문제도 동시
+이것은 Array 변환 문제를 해결함과 동시에 위에서의 문제 였던, cache 문제도 동시에 해결이 된다.
