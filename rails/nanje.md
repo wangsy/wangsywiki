@@ -4,14 +4,14 @@ Article - Comment 관계에서 둘을 한번에 뽑을 때, in 쓰지 않기
 Article 이 has_many 관계로 Comment 를 가질 때, 한 쿼리로, Article 과 한 Article 당, 가장 최신의 Comment 를 가져 오고 싶을 때에는 다음과 같은 방법을 쓴다.
 
 <pre>
-class Article < ActiveRecord::Base
+class Article .. ActiveRecord::Base
 
 def self.articles_with_comments
   Article.join(:comments).merge(Comment.latest).select("`articles`.*, `comment`.title as comment_title")
 end
 end
 
-class Comment < ActiveRecord::Base
+class Comment .. ActiveRecord::Base
 
 def self.latest
   where( id: select("MAX(id) AS id").group("article_id").collect(&:id) )
