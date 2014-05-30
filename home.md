@@ -9,7 +9,6 @@ wangsy wiki
 - [2013. 11](dev-logs/201311)
 - [2013. 05](dev-logs/201305)
 - [2013. 04](dev-logs/201304)
-- [2013. 04](dev-logs/201304)
 
 Ubuntu Setting
 ---------------
