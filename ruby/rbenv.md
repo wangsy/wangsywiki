@@ -56,4 +56,6 @@ https://github.com/sstephenson/rbenv
 
 ### Ubuntu에서 2.1.0 설치되지 않는 문제
 
+https://github.com/sstephenson/ruby-build/issues/526
+
     $ curl -fsSL https://gist.github.com/mislav/a18b9d7f0dc5b9efc162.txt | rbenv install --patch 2.1.1
