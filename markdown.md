@@ -34,16 +34,13 @@
 3. 셋
 
 * 리스트 아이뎀
+  이어서 쓰기
 
- 이어서 쓰기
-* 두번째 아이템
+  * 두번째 아이템
 
-  code block
-  this is code block
+``` 
+code block
+this is code block
+```
  
 나오나?
-
-{{{{{ blue-modern
-  alice->bob: Test
-  bob->alice: Test response
-}}}}}
