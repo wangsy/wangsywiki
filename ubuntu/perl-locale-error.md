@@ -22,3 +22,9 @@ client 쪽 .bash_profile 에 아래 추가
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 ```
+혹은 접속하는 서버쪽에 /etc/environment 파일을 수정
+
+```
+LC_ALL=en_US.UTF-8
+LANG=en_US.UTF-8
+```
